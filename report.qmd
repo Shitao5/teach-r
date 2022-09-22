@@ -1,0 +1,24 @@
+---
+title: "问卷数据分析"
+format: html
+---
+
+# 可重复报告
+
+## 问卷情况
+
+```{r}
+data <- readxl::read_xlsx("data.xlsx")
+data1 <- data[, 7:10]
+names(data1) <- c("性别", "是否学过", "最熟悉的编程语言", "是否愿意")
+```
+
+共有 `r nrow(data1)` 人填写了问卷，其中男生 `r sum(data1$性别 == "男")` 人，女生 `r sum(data1$性别 == "女")` 人，`r ifelse(sum(data1$性别 == "男") > sum(data1$性别 == "女"), print("男生比女生多"), print("女生比男生多"))`。男女比例饼图：
+
+```{r}
+pie(table(data1$性别))
+```
+
+## 编程语言掌握情况
+
+有 `r sum(data1$是否学过 == "是")` 人学习过至少一门编程语言，其中最熟悉 Python 的占比 `r sum(data1$最熟悉的编程语言 == "Python") / sum(data1$是否学过 == "是") * 100`%，最熟悉 R 的占比 `r sum(data1$最熟悉的编程语言 == "R") / sum(data1$是否学过 == "是") * 100`%。

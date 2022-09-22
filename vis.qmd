@@ -1,0 +1,138 @@
+---
+title: "交互可视化"
+format: html
+---
+
+# dygraphs 包
+
+案例来自 **dygraphs** 帮助文档。
+
+```{r}
+library(dygraphs)
+dygraph(nhtemp) %>% 
+  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+```
+
+## demo1
+
+```{r}
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths) %>%
+  dyBarSeries('fdeaths')
+```
+
+## demo2
+
+```{r}
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths) %>%
+  dyStemSeries('fdeaths')
+```
+
+## demo3
+
+```{r}
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths) %>%
+  dyShadow('fdeaths')
+```
+
+## demo4
+
+```{r}
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths) %>%
+  dyFilledLine('fdeaths')
+```
+
+# echarts4r 包
+
+## 组合图形
+
+案例来自统计之都：[echarts4r: 从入门到应用](https://cosx.org/2021/12/introduction-to-echarts4r/)，作者[袁凡](https://yuanfan.rbind.io/)。
+
+```{r}
+library(echarts4r)
+
+data <- data.frame(
+  month = paste0(c(1:12), "月"),
+  Evaporation = sample(2:200, 12),
+  Precipitation = sample(2:200, 12),
+  Temperature = sample(2:25, 12, replace = TRUE)
+)
+```
+
+```{r}
+data |>
+  e_charts(month) |> # 横轴
+  e_bar(Evaporation) |> # 纵轴的第一个变量
+  e_bar(Precipitation) |> # 纵轴的第二个变量
+  e_line(Temperature) # 纵轴的第三个变量
+```
+
+## 饼图
+
+```{r}
+data |>
+  e_chart(month) |>
+  e_pie(Evaporation) |>
+  e_legend(
+    type = "scroll", # 图例类型为滚动展示
+    selector = c("all", "inverse"), # 增加全选、反选的选择器按钮
+    selectorPosition = "start", # 选择器按钮的位置，start表示放在图例前面，end表示放在图例后面
+    orient = "horizontal", # 水平布局
+    left = 20
+  )
+```
+
+## 数据缩放（滑动条）
+
+```{r}
+data |>
+  e_charts(month) |>
+  e_line(Evaporation, name = "蒸发量") |>
+  e_line(Precipitation, name = "降水量") |>
+  e_datazoom(type = "slider")
+```
+
+## 数据缩放（内置）
+
+```{r}
+data |>
+  e_charts(month) |>
+  e_line(Evaporation, name = "蒸发量") |>
+  e_line(Precipitation, name = "降水量") |>
+  e_datazoom(type = "inside")
+```
+
+## 视觉映射
+
+```{r}
+data |>
+  e_charts(month) |>
+  e_bar_3d(Evaporation, Precipitation) |>
+  e_visual_map(dimension = 2)
+```
+
+## 水球
+
+```{r}
+liquid <- data.frame(val = c(0.6, 0.5, 0.4))
+liquid |>
+  e_charts(height = 250) |>
+  e_liquid(val)
+```
+
+## 漏斗图
+
+```{r}
+funnel <-
+  data.frame(
+    stage = c("View", "Click", "Purchase"),
+    value = c(80, 30, 20)
+  )
+funnel |>
+  e_charts(height = 250) |>
+  e_funnel(value, stage) |>
+  e_legend(show = FALSE)
+```

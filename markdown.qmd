@@ -1,0 +1,108 @@
+---
+title: "Markdown"
+author: "shitao"
+date: "2022-09-26"
+format: html
+---
+
+# Markdown 基础
+
+## 标题
+
+```md
+# 一级标题
+## 二级标题
+### 三级标题
+```
+
+## 列表
+
+### 无序列表
+
+- 文本1
+- 文本2
+- 文本3
+
+### 有序列表
+
+1. 文本1
+1. 文本2
+1. 文本3
+
+## todo
+
+- [ ] todo1
+- [ ] todo2
+- [x] todo3
+
+## 引用
+
+### 文本引用
+
+> 若想了解上帝在想什么，我们就必须学统计，因为统计学就是在量测他的旨意。
+>
+> ——南丁格尔
+
+### 函数引用
+
+R 语言加载包使用 `library()` 函数。
+
+# 数学公式
+
+## 行内公式
+
+对于一系列随机变量 $\{X_n\}$ ，设每个随机变量都有期望。由于随机变量之和 $\sum_{i=1}^{n}X_i$ 很有可能发散到无穷大，我们转而考虑随机变量的均值 $\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$ 和其期望 $E(\bar{X_n})$ 之间的距离。若 $\{X_n\}$ 满足一定条件，当$n$足够大时，这个距离会以非常大的概率接近$0$，这就是**大数定律**的主要思想。
+
+## 行间公式
+
+- 计算极限
+
+$$
+\lim_{x \to +\infty} \frac{1}{x}(\frac{1}{\sin x}-\frac{1}{\tan x})
+$$
+
+- 矩阵
+
+$$
+A=\begin{bmatrix}
+a_{11} & \dots & a_{1n}\\
+  & \ddots & \vdots\\
+0 & & a_{nn}
+\end{bmatrix}_{n \times n}
+$$
+
+# 图
+
+## mermaid
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+## dot
+
+```{dot}
+graph G {
+  layout=neato
+  run -- intr;
+  intr -- runbl;
+  runbl -- run;
+  run -- kernel;
+  kernel -- zombie;
+  kernel -- sleep;
+  kernel -- runmem;
+  sleep -- swap;
+  swap -- runswap;
+  runswap -- new;
+  runswap -- runmem;
+  new -- runmem;
+  sleep -- runmem;
+}
+```
+
+<!-- number-sections: true -->
+<!-- toc: true -->
